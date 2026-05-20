@@ -1,0 +1,230 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Trang chủ Tin Tức";
+    Layout = null; // Ẩn layout mặc định của hệ thống để tự thiết kế hoàn toàn
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                background-color: #fcfcfc;
+                color: #333;
+                display: flex;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .container {
+                width: 1000px;
+                background: #fff;
+                padding: 15px;
+            }
+
+            /* 1. Thanh Menu Điều Hướng */
+            .navbar {
+                display: flex;
+                align-items: center;
+                border-top: 1px solid #e5e5e5;
+                border-bottom: 1px solid #e5e5e5;
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+
+            .navbar a {
+                text-decoration: none;
+                color: #4f4f4f;
+                font-weight: bold;
+                font-size: 14px;
+                margin-right: 15px;
+            }
+
+            .navbar a.home-icon {
+                color: #757575;
+                font-size: 16px;
+            }
+
+            .navbar a:hover {
+                color: #9f224e; /* Màu đỏ đô đặc trưng của báo chí */
+            }
+
+            /* 2. Phần Tin Nổi Bật (Top Story) */
+            .top-story {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 25px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .top-story .main-img {
+                width: 55%;
+            }
+
+            .top-story .main-img img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+
+            .top-story .main-content {
+                width: 45%;
+            }
+
+            .top-story .main-content h1 {
+                font-size: 24px;
+                line-height: 1.3;
+                margin-bottom: 12px;
+                color: #111;
+                font-weight: 700;
+            }
+
+            .top-story .main-content p {
+                font-size: 15px;
+                color: #4f4f4f;
+                line-height: 1.5;
+                margin-bottom: 10px;
+            }
+
+            .top-story .main-content .time {
+                font-size: 12px;
+                color: #757575;
+            }
+
+            /* 3. Phần Khối Tin Phụ Phía Dưới (Sub Stories) */
+            .sub-stories {
+                display: flex;
+                gap: 20px;
+            }
+
+            .sub-column {
+                width: 35%;
+            }
+
+            .sub-column h2 {
+                font-size: 16px;
+                color: #111;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .sub-column img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                margin-top: 8px;
+            }
+
+            /* Khối "Góc nhìn" bên phải ngoài cùng */
+            .sidebar-column {
+                width: 30%;
+                background-color: #f7f7f7;
+                padding: 15px;
+            }
+
+            .sidebar-column .category-title {
+                color: #9f224e;
+                font-weight: bold;
+                font-size: 15px;
+                margin-bottom: 8px;
+            }
+
+            .sidebar-column h3 {
+                font-size: 16px;
+                color: #111;
+                margin-bottom: 8px;
+            }
+
+            .sidebar-column p {
+                font-size: 14px;
+                color: #555;
+                line-height: 1.4;
+                margin-bottom: 10px;
+            }
+
+            .sidebar-column .author {
+                font-size: 13px;
+                font-weight: bold;
+                color: #4f4f4f;
+                font-style: italic;
+            }
+
+            .sidebar-column .comments {
+                font-size: 12px;
+                color: #757575;
+                margin-left: 5px;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <nav class="navbar">
+            <a href="#" class="home-icon"><i class="fa-solid fa-house"></i></a>
+            <a href="#">VnE-GO</a>
+            <a href="#">Thời sự</a>
+            <a href="#">Thế giới</a>
+            <a href="#">Kinh doanh</a>
+            <a href="#">Khoa học công nghệ</a>
+            <a href="#">Góc nhìn</a>
+            <a href="#">Spotlight</a>
+            <a href="#">Bất động sản</a>
+            <a href="#">Sức khỏe</a>
+            <a href="#">Giải trí</a>
+            <a href="#">Thể thao</a>
+        </nav>
+
+        <section class="top-story">
+            <div class="main-img">
+                <img src="https://picsum.photos/id/1025/600/350" alt="Trục cảnh quan sông Hồng" />
+            </div>
+            <div class="main-content">
+                <h1>'Ưu tiên tái định cư trước khi triển khai Trục cảnh quan sông Hồng'</h1>
+                <p>Hà Nội sẽ ưu tiên xây dựng các khu tái định cư trước khi triển khai Trục Đại lộ cảnh quan sông Hồng - dự án hơn 11.400 ha, liên quan khoảng 247.000 dân ven sông, thực hiện giai đoạn 2026-2038.</p>
+                <div class="time">1h trước</div>
+            </div>
+        </section>
+
+        <section class="sub-stories">
+
+            <div class="sub-column">
+                <h2>Hà Nội giải phóng mặt bằng cho hơn 1.400 dự án</h2>
+                <img src="https://picsum.photos/id/1067/300/180" alt="Giải phóng mặt bằng" />
+            </div>
+
+            <div class="sub-column">
+                <h2>TP HCM siết kiểm soát người nhập cảnh phòng Ebola</h2>
+                <img src="https://picsum.photos/id/357/300/180" alt="Kiểm soát nhập cảnh" />
+            </div>
+
+            <div class="sidebar-column">
+                <div class="category-title">Góc nhìn</div>
+                <h3>'Bóc lột' trên YouTube</h3>
+                <p>Khi cỗ máy Content ID của YouTube bị trục lợi, nhiều nghệ s...</p>
+                <div>
+                    <span class="author">Hoàng Hà</span>
+                    <span class="comments"><i class="fa-regular fa-comment"></i> 24</span>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>
