@@ -1,0 +1,38 @@
+@model IEnumerable<BaiThucHanh3.Models.Book>
+@{
+    ViewData["Title"] = "Danh sách sách";
+}
+
+<h2>Danh sách sách</h2>
+<p class="text-muted">Bài 5 – Quản lý sách (Controller + View + Routing)</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Name</td>
+                <td>@book.Price</td>
+                <td class="text-nowrap">
+                    <a asp-action="Detail" asp-route-id="@book.Id" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                    <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-outline-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-outline-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Thêm sách mới</a>
+    <a asp-controller="Account" asp-action="Login" class="btn btn-secondary ms-2">Đăng nhập</a>
+</p>

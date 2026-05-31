@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 1,
+    "Name": "Clean Code",
+    "Price": 20
+  },
+  {
+    "Id": 2,
+    "Name": "ASP.NET MVC",
+    "Price": 15
+  },
+  {
+    "Id": 4,
+    "Name": "b\u1EA1n l\u00E0 c\u1EADu nh\u1ECF c\u1EE7aa t\u1EDB:\u003E",
+    "Price": 50.000
+  },
+  {
+    "Id": 5,
+    "Name": "khong c\u00F3 gi",
+    "Price": 12.000
+  }
+]
