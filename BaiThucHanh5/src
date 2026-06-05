@@ -1,1 +1,23 @@
+1. Middleware trong ASP.NET Core dùng để làm gì?
+Middleware là các thành phần được gắn vào Request Pipeline của ứng dụng. Chúng dùng để xử lý các HTTP request khi đi vào và HTTP response khi đi ra. Các công dụng chính bao gồm: xác thực (authentication), phân quyền (authorization), ghi log, xử lý lỗi, nén dữ liệu hoặc phục vụ các file tĩnh.
 
+2. Middleware khác Controller ở điểm nào?
+Middleware: Hoạt động ở mức "cơ sở hạ tầng", nằm trong pipeline của toàn bộ ứng dụng hoặc các nhánh định tuyến (routing). Nó chạy trước hoặc sau khi request đến được Controller.
+
+Controller: Là nơi chứa logic nghiệp vụ (business logic) cụ thể của từng hành động (action) sau khi đã qua bước routing. Controller chỉ được thực thi khi request đã đi qua Middleware định tuyến (UseRouting).
+
+3. Dòng lệnh await _next(context); có ý nghĩa gì?
+Đây là lệnh chuyển quyền điều khiển từ Middleware hiện tại sang Middleware tiếp theo trong pipeline.
+
+Nếu không gọi lệnh này, pipeline sẽ bị "ngắt" (short-circuit).
+
+Nếu gọi await _next(context), code nằm phía sau dòng này sẽ được thực thi khi pipeline quay ngược trở lại sau khi đã xử lý xong các thành phần tiếp theo.
+
+4. Vì sao khi middleware trả về return; thì request không đi tiếp vào Controller?
+Khi bạn dùng lệnh return; mà không gọi await _next(context);, Middleware hiện tại sẽ không chuyển request sang thành phần tiếp theo. Kết quả là request dừng lại tại đó và không bao giờ đến được các tầng phía sau (như Routing hoặc Controller), do đó Controller không nhận được request.
+
+5. Nếu đặt middleware sau app.MapControllerRoute(...) thì có thể xảy ra vấn đề gì?
+app.MapControllerRoute (thường đi kèm UseRouting và UseEndpoints) đóng vai trò quyết định request đó thuộc về Controller nào. Nếu đặt Middleware của bạn sau các lệnh này, Middleware đó sẽ không bao giờ được chạy đối với các request đã được xử lý bởi các route của Controller, vì ứng dụng đã thực thi xong pipeline tại bước endpoint.
+
+6. Nếu cần sử dụng thêm middleware khác thì viết tiếp thế nào?
+Bạn có thể tiếp tục thêm bằng cách gọi phương thức Use hoặc các phương thức mở rộng (extension methods) tương ứng trong file Program.cs.
