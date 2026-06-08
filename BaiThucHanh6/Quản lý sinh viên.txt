@@ -1,0 +1,11 @@
+Quản lý sinh viên là quá trình tổ chức, theo dõi và lưu trữ toàn bộ dữ liệu liên quan đến quá trình học tập và rèn luyện của người học tại cơ sở giáo dục.
+
+Mục tiêu chính của hoạt động này bao gồm:
+
+Lưu trữ dữ liệu: Quản lý thông tin cá nhân, hồ sơ nhập học và quá trình chuyển đổi trạng thái của sinh viên.
+
+Theo dõi học tập: Quản lý điểm số, lịch trình học tập, tín chỉ và quá trình xét tốt nghiệp.
+
+Quản lý rèn luyện: Ghi nhận thông tin về học bổng, các hoạt động ngoại khóa, khen thưởng và kỷ luật.
+
+Tối ưu hóa vận hành: Giúp nhà trường ra quyết định chính xác, giảm thiểu thủ tục giấy tờ và tăng cường kết nối giữa nhà trường, sinh viên và giảng viên thông qua các hệ thống số hóa (như ERP hoặc LMS).
