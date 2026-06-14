@@ -1,0 +1,69 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Book thumbnail styling: fixed box, center-cropped */
+.book-thumb {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* Home hero styles */
+.home-hero {
+  padding: 36px 0 48px 0;
+}
+.hero-card {
+  background: rgba(255,255,255,0.92);
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.hero-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 720px;
+  object-fit: none;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0 auto;
+}
+.home-thumb {
+  width: 56px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}

@@ -1,0 +1,74 @@
+@model Book
+@{
+    ViewData["Title"] = "Sửa sách";
+}
+
+<h2>Sửa thông tin sách</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AuthorId" class="form-label"></label>
+        <select asp-for="AuthorId" class="form-control" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Authors, "Id", "Name"))">
+            <option value="">-- Chọn tác giả --</option>
+        </select>
+        <span asp-validation-for="AuthorId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Hoặc nhập tác giả mới</label>
+        <input type="text" name="newAuthorName" class="form-control" placeholder="Nhập tên tác giả mới nếu muốn" />
+        <div class="form-text">Nếu nhập tên tác giả mới, tác giả mới sẽ được tạo và gán cho sách.</div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Ảnh hiện có</label>
+        <div>
+            @if (Model.Images != null)
+            {
+                foreach (var img in Model.Images)
+                {
+                    <img src="/@img.FileName" alt="" style="max-width:120px; margin-right:8px;" />
+                }
+            }
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Thêm ảnh mới</label>
+        <input type="file" name="images" multiple class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-warning">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

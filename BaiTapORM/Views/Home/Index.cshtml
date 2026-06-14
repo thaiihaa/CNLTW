@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="text-center py-4">
+    <h1 class="display-5">Chào mừng đến Website Quản Lý Sách</h1>
+    <p class="lead">Ứng dụng ASP.NET MVC - Bài tập CRUD với Layout và Razor View Engine</p>
+    <hr />
+    <div class="home-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <p class="lead mb-3">Chủ đề: <strong>Quản lý sách (BookManagement - SQL Server)</strong></p>
+                    <p class="mb-4">Ứng dụng mẫu hiển thị danh sách sách, tìm kiếm, phân loại, upload ảnh sách và quản lý tác giả. Thử ngay bằng cách xem danh sách sách.</p>
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-primary btn-lg">Xem danh sách sách</a>
+
+                    
+                </div>
+                <div class="col-lg-5 text-center">
+                    <div class="hero-card p-3">
+                        @{ 
+                            string imgUrl = "/images/giao-dien-sach.png";
+                            try {
+                                var wwwPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot", "images", "giao-dien-sach.png");
+                                if (System.IO.File.Exists(wwwPath)) {
+                                    var t = System.IO.File.GetLastWriteTimeUtc(wwwPath).Ticks;
+                                    imgUrl = imgUrl + "?v=" + t;
+                                } else {
+                                    var projPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "images", "giao-dien-sach.png");
+                                    if (System.IO.File.Exists(projPath)) {
+                                        var t2 = System.IO.File.GetLastWriteTimeUtc(projPath).Ticks;
+                                        imgUrl = imgUrl + "?v=" + t2;
+                                    }
+                                }
+                            } catch { }
+                        }
+                        <img src="@imgUrl" alt="Giao diện sách" class="hero-image" onerror="this.src='/images/giao-dien-sach.png'" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        console.log("Trang chủ đã được tải");
+    </script>
+}

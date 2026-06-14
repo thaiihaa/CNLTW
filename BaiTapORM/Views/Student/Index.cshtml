@@ -1,0 +1,78 @@
+@model List<Student>
+@{
+    ViewData["Title"] = "Danh sách sinh viên";
+    var search = ViewBag.Search as string ?? "";
+    var sortBy = ViewBag.SortBy as string ?? "Id";
+    var sortOrder = ViewBag.SortOrder as string ?? "asc";
+    string SortLink(string column) {
+        var newOrder = sortBy == column && sortOrder == "asc" ? "desc" : "asc";
+        return Url.Action("Index", new { search, sortBy = column, sortOrder = newOrder })!;
+    }
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sách sinh viên</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm mới</a>
+</div>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-auto flex-grow-1">
+        <input type="text" name="search" value="@search" class="form-control" placeholder="Tìm kiếm theo tên, email, SĐT, lớp..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Tìm kiếm</button>
+        @if (!string.IsNullOrEmpty(search))
+        {
+            <a asp-action="Index" class="btn btn-outline-danger">Xóa bộ lọc</a>
+        }
+    </div>
+</form>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">
+        <p class="mb-0">Chưa có dữ liệu sinh viên.</p>
+    </div>
+}
+else
+{
+    <p class="text-muted">Danh sách có @Model.Count sinh viên.</p>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th><a href="@SortLink("Id")" class="text-white text-decoration-none">Id @(sortBy == "Id" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th><a href="@SortLink("Name")" class="text-white text-decoration-none">Họ tên @(sortBy == "Name" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th><a href="@SortLink("Email")" class="text-white text-decoration-none">Email @(sortBy == "Email" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th>Số điện thoại</th>
+                    <th><a href="@SortLink("Class")" class="text-white text-decoration-none">Lớp @(sortBy == "Class" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Class</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Chi tiết</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        console.log("Trang danh sách sinh viên đã được tải");
+    </script>
+}

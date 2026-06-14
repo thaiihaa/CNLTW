@@ -1,0 +1,44 @@
+@model Book
+@{
+    ViewData["Title"] = "Chi tiết sách";
+}
+
+<h2>Chi tiết sách</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Id</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Tên sách</dt>
+    <dd class="col-sm-9">@Model.Title</dd>
+
+    <dt class="col-sm-3">Tác giả</dt>
+    <dd class="col-sm-9">@Model.Author?.Name</dd>
+
+    <dt class="col-sm-3">Giá</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("N0") đ</dd>
+
+    <dt class="col-sm-3">Số lượng</dt>
+    <dd class="col-sm-9">@Model.Quantity</dd>
+
+    <dt class="col-sm-3">Mô tả</dt>
+    <dd class="col-sm-9">@(Model.Description ?? "—")</dd>
+</dl>
+
+<div class="mb-3">
+    <label class="form-label">Ảnh minh họa</label>
+    <div>
+        @if (Model.Images != null)
+        {
+            foreach (var img in Model.Images)
+            {
+                <img src="/@img.FileName" style="max-width:200px; margin-right:8px;" />
+            }
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>
