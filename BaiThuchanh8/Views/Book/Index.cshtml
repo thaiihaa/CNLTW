@@ -1,0 +1,81 @@
+@model List<Book>
+@{
+    ViewData["Title"] = "Danh sách sách";
+    var search = ViewBag.Search as string ?? "";
+    var sortBy = ViewBag.SortBy as string ?? "Id";
+    var sortOrder = ViewBag.SortOrder as string ?? "asc";
+    string SortLink(string column) {
+        var newOrder = sortBy == column && sortOrder == "asc" ? "desc" : "asc";
+        return Url.Action("Index", new { search, sortBy = column, sortOrder = newOrder })!;
+    }
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sách sách</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm sách</a>
+</div>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-auto flex-grow-1">
+        <input type="text" name="search" value="@search" class="form-control" placeholder="Tìm kiếm theo tên sách..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Tìm kiếm</button>
+        @if (!string.IsNullOrEmpty(search))
+        {
+            <a asp-action="Index" class="btn btn-outline-danger">Xóa bộ lọc</a>
+        }
+    </div>
+</form>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">
+        <p class="mb-0">Chưa có dữ liệu sách trong CSDL.</p>
+    </div>
+}
+else
+{
+    <p class="text-muted">Danh sách có @Model.Count cuốn sách.</p>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th><a href="@SortLink("Title")" class="text-white text-decoration-none">Tên @(sortBy == "Title" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th><a href="@SortLink("Price")" class="text-white text-decoration-none">Giá @(sortBy == "Price" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th>Hình ảnh</th>
+                    <th><a href="@SortLink("Author")" class="text-white text-decoration-none">Tác giả @(sortBy == "Author" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th><a href="@SortLink("Quantity")" class="text-white text-decoration-none">SL @(sortBy == "Quantity" ? (sortOrder == "asc" ? "▲" : "▼") : "")</a></th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Price.ToString("N0") đ</td>
+                        <td>
+                            @if (item.Images != null && item.Images.Any())
+                            {
+                                <img src="@item.Images.First().ImagePath" alt="Ảnh sản phẩm" style="height:80px; width:80px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">(Chưa có)</span>
+                            }
+                        </td>
+                        <td>@item.Author</td>
+                        <td>@item.Quantity</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Chi tiết</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
