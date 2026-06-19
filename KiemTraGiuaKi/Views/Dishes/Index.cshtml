@@ -1,0 +1,132 @@
+@model IEnumerable<KiemTraGiuaKi.Models.Dish_BIT242377>
+
+@{
+    ViewData["Title"] = "Danh sách món ăn";
+}
+
+<h1>Danh sách món ăn</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+</p>
+
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label class="form-label">Tìm kiếm</label>
+            <input type="text" class="form-control" name="searchString" value="@ViewData["CurrentSearch"]" placeholder="Tên món ăn">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Loại món ăn</label>
+            <select class="form-select" name="categoryId">
+                <option value="">Tất cả</option>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Id" selected="@(ViewData["CurrentCategory"]?.ToString() == cat.Id.ToString())">@cat.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Trạng thái</label>
+            <select class="form-select" name="isAvailable">
+                <option value="">Tất cả</option>
+                <option value="true" selected="@(ViewData["CurrentIsAvailable"]?.ToString() == "True")">Đang bán</option>
+                <option value="false" selected="@(ViewData["CurrentIsAvailable"]?.ToString() == "False")">Ngừng bán</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Giá thấp nhất</label>
+            <input type="number" class="form-control" name="minPrice" value="@ViewData["CurrentMinPrice"]" step="0.01">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Giá cao nhất</label>
+            <input type="number" class="form-control" name="maxPrice" value="@ViewData["CurrentMaxPrice"]" step="0.01">
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-success w-100">Tìm</button>
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-md-12">
+            <span>Sắp xếp: </span>
+            <a asp-action="Index" asp-route-sortOrder="price_asc" asp-route-searchString="@ViewData["CurrentSearch"]" asp-route-categoryId="@ViewData["CurrentCategory"]" asp-route-isAvailable="@ViewData["CurrentIsAvailable"]" asp-route-minPrice="@ViewData["CurrentMinPrice"]" asp-route-maxPrice="@ViewData["CurrentMaxPrice"]" class="btn btn-link">Giá tăng</a>
+            <a asp-action="Index" asp-route-sortOrder="price_desc" asp-route-searchString="@ViewData["CurrentSearch"]" asp-route-categoryId="@ViewData["CurrentCategory"]" asp-route-isAvailable="@ViewData["CurrentIsAvailable"]" asp-route-minPrice="@ViewData["CurrentMinPrice"]" asp-route-maxPrice="@ViewData["CurrentMaxPrice"]" class="btn btn-link">Giá giảm</a>
+            <a asp-action="Index" asp-route-sortOrder="time" asp-route-searchString="@ViewData["CurrentSearch"]" asp-route-categoryId="@ViewData["CurrentCategory"]" asp-route-isAvailable="@ViewData["CurrentIsAvailable"]" asp-route-minPrice="@ViewData["CurrentMinPrice"]" asp-route-maxPrice="@ViewData["CurrentMaxPrice"]" class="btn btn-link">Thời gian tăng</a>
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Tìm kiếm không có kết quả.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên</th>
+                <th>Loại</th>
+                <th>Giá</th>
+                <th>Thời gian chế biến</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
+                            var thumbnail = item.DishImages.FirstOrDefault(i => i.IsThumbnail);
+                            if (thumbnail != null)
+                            {
+                                <img src="@thumbnail.ImageUrl" alt="@item.Name" class="dish-thumbnail">
+                            }
+                            else
+                            {
+                                <span class="text-muted">Món ăn chưa có ảnh.</span>
+                            }
+                        }
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.DishCategory?.Name</td>
+                    <td>@item.Price.ToString("N0") VNĐ</td>
+                    <td>
+                        @item.PreparationTime phút
+                        @if (item.PreparationTime <= 15)
+                        {
+                            <span class="badge bg-success ms-2">Nhanh</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary ms-2">Thường</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsAvailable)
+                        {
+                            <span class="badge bg-success">Đang bán</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Ngừng bán</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Xem</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

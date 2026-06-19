@@ -1,0 +1,73 @@
+@model KiemTraGiuaKi.Models.Dish_BIT242377
+
+@{
+    ViewData["Title"] = "Chi tiết món ăn";
+}
+
+<h1>Chi tiết món ăn</h1>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Loại món ăn</dt>
+        <dd class="col-sm-10">@Model.DishCategory?.Name</dd>
+
+        <dt class="col-sm-2">Giá</dt>
+        <dd class="col-sm-10">@Model.Price.ToString("N0") VNĐ</dd>
+
+        <dt class="col-sm-2">Thời gian chế biến</dt>
+        <dd class="col-sm-10">
+            @Model.PreparationTime phút
+            @if (Model.PreparationTime <= 15)
+            {
+                <span class="badge bg-success ms-2">Nhanh</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary ms-2">Thường</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">Trạng thái</dt>
+        <dd class="col-sm-10">
+            @if (Model.IsAvailable)
+            {
+                <span class="badge bg-success">Đang bán</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">Ngừng bán</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">Mô tả</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+    </dl>
+
+    <h4>Ảnh món ăn</h4>
+    <div class="row mb-4">
+        @foreach (var img in Model.DishImages)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <img src="@img.ImageUrl" class="card-img-top dish-image">
+                    <div class="card-body text-center">
+                        @if (img.IsThumbnail)
+                        {
+                            <span class="badge bg-success">Ảnh đại diện</span>
+                        }
+                        else
+                        {
+                            <a asp-action="SetThumbnail" asp-route-dishId="@Model.Id" asp-route-imageId="@img.Id" class="btn btn-sm btn-outline-primary">Đặt làm ảnh đại diện</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>

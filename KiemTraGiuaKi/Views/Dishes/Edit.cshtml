@@ -1,0 +1,106 @@
+@model KiemTraGiuaKi.Models.Dish_BIT242377
+
+@{
+    ViewData["Title"] = "Sửa món ăn";
+}
+
+<h1>Sửa món ăn</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" step="0.01" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="PreparationTime" class="form-label"></label>
+                <input asp-for="PreparationTime" class="form-control" />
+                <span asp-validation-for="PreparationTime" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="IsAvailable" class="form-label"></label>
+                <input asp-for="IsAvailable" class="form-check-input" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DishCategoryId" class="form-label"></label>
+                <select asp-for="DishCategoryId" class="form-select" asp-items="ViewBag.DishCategoryId"></select>
+                <span asp-validation-for="DishCategoryId" class="text-danger"></span>
+            </div>
+
+            <h4 class="mb-3">Ảnh hiện tại</h4>
+            <div class="row mb-3">
+                @foreach (var img in Model.DishImages)
+                {
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <img src="@img.ImageUrl" class="card-img-top dish-image">
+                            <div class="card-body text-center">
+                                @if (img.IsThumbnail)
+                                {
+                                    <span class="badge bg-success">Ảnh đại diện</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Tải ảnh lên (JPG, PNG)</label>
+                <div id="imageFiles">
+                    <div class="input-group mb-2">
+                        <input type="file" name="imageFiles" class="form-control" accept=".jpg,.jpeg,.png,.gif">
+                    </div>
+                </div>
+                <button type="button" id="addImageFileBtn" class="btn btn-outline-secondary">+ Thêm ảnh</button>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Ảnh (URL)</label>
+                <div id="imageUrls">
+                    <div class="input-group mb-2">
+                        <input type="text" name="imageUrls" class="form-control" placeholder="URL ảnh">
+                    </div>
+                </div>
+                <button type="button" id="addImageUrlBtn" class="btn btn-outline-secondary">+ Thêm ảnh</button>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('addImageFileBtn').addEventListener('click', function() {
+            const container = document.getElementById('imageFiles');
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2';
+            div.innerHTML = '<input type="file" name="imageFiles" class="form-control" accept=".jpg,.jpeg,.png,.gif">';
+            container.appendChild(div);
+        });
+
+        document.getElementById('addImageUrlBtn').addEventListener('click', function() {
+            const container = document.getElementById('imageUrls');
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2';
+            div.innerHTML = '<input type="text" name="imageUrls" class="form-control" placeholder="URL ảnh">';
+            container.appendChild(div);
+        });
+    </script>
+}
