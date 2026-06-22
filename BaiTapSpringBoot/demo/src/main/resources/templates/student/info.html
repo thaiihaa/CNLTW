@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin sinh viên</title>
+</head>
+<body>
+    <h1>Thông tin sinh viên</h1>
+    <p><strong>Họ tên:</strong> <span th:text="${student.name}"></span></p>
+    <p><strong>Tuổi:</strong> <span th:text="${student.age}"></span></p>
+    <p><strong>Ngành:</strong> <span th:text="${student.major}"></span></p>
+</body>
+</html>
